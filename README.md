@@ -9,8 +9,8 @@ node NumberPool.tests.js
 ## Usage
 The NumberPool object represents the pool of numbers ranging from one to ten million (1 to 10,000,000). You create a NumberPool by calling the create function on the NumberPoolFactory.
 ```javascript
-var npf = require('NumberPool.js).NumberPoolFactory,
-    np = npf.create();
+var npf = require("./NumberPool.js"),
+    np = npf.createNumberPool();
 ```
 The resulting NumberPool object has two methods: allocate and release. When an instance of the NumberPool is instantiated, the object state is such that the range of numbers (1 to 10,000,000) is in the pool. The code can call the allocate method and expect it to succeed immediately after the object is created.
 
