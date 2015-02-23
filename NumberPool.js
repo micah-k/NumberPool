@@ -6,7 +6,7 @@
 //
 // Create a NumberPool object that manages a pool of numbers in a range through the methods allocate and release.
 // The NumberPool object represents the pool of numbers ranging from one to ten million (1 to 10,000,000), unless 
-// you pass a custom isze for testing.
+// you pass a custom size for testing.
 //
 exports.createNumberPool = function (size) {
     "use strict";
@@ -20,7 +20,7 @@ exports.createNumberPool = function (size) {
         //
         // _validRangeTest
         //
-        // Throws an expection if the given range in not valid.
+        // Throws an expection if the given range is not valid.
         //
         _validRangeTest = function (range) {
             if (typeof range !== 'object') { throw new Error("range is not an object"); }
@@ -108,9 +108,9 @@ exports.createNumberPool = function (size) {
         //
         // _findBracket
         //
-        // Returns a bracket where left is the index to the left of where
-        // value belongs in the pool and right is the index to the right 
-        // of where value belongs in the pool. If the value is in the pool
+        // Returns a bracket, where left is the index to the left of where
+        // value belongs in the pool, and right is the index to the right 
+        // of where value belongs in the pool. If the value is in the pool,
         // the left and right will be equal. If the value belongs at the 
         // beginning of the pool, left will be -1 and right will be 0. If
         // the value belongs at the end of the pool, then left will be the 
@@ -132,7 +132,8 @@ exports.createNumberPool = function (size) {
             if (last === -1) { throw new Error("Don't call _findBracket with an empty pool"); }
 
             while (result.left <= result.right) {
-                // shifting is faster than dividing by two
+                // Shifting is faster than dividing by two.
+                // http://jsperf.com/code-review-1480
                 mid = (result.left + result.right) >> 1;
                 candidate = _promoteToRange(_pool[mid]);
                 if (candidate.end < value) {
@@ -295,8 +296,8 @@ exports.createNumberPool = function (size) {
         //
         // _mergeBegin
         //
-        // Attempts to merge the begin of the range at the 
-        // given index with the number provided.
+        // Attempts to merge the beginning of the range at 
+        // the given index with the number provided.
         // Returns true if successful, otherwise false.
         //
         _mergeBegin = function (number, index) {
@@ -314,8 +315,8 @@ exports.createNumberPool = function (size) {
         //
         // allocate
         //
-        // returns a number from the pool of available numbers
-        // if no more numbers are available, returns 0
+        // Returns a number from the pool of available numbers.
+        // If no more numbers are available, returns 0.
         //
         // Design:
         //
@@ -327,7 +328,7 @@ exports.createNumberPool = function (size) {
 
             if (_pool.length === 0) {
                 // If the pool is empty then 
-                // all numbers have been allocated
+                // all numbers have been allocated.
                 return result;
             }
             if (typeof _pool[lastIndex] === 'number') {
@@ -335,7 +336,7 @@ exports.createNumberPool = function (size) {
             } else {
                 result = _pool[lastIndex].end;
                 _pool[lastIndex].end -= 1;
-                // demote ranges of one number to single numbers to save space
+                // Demote ranges of one number to single numbers to save space.
                 if (_pool[lastIndex].end === _pool[lastIndex].begin) {
                     _pool[lastIndex] = _pool[lastIndex].begin;
                 }
@@ -345,7 +346,7 @@ exports.createNumberPool = function (size) {
         //
         // release
         //
-        // adds an available number value back to the pool. 
+        // Adds an available number value back to the pool. 
         // If the value is successfully added back to the pool, 
         // returns true. If the value is already in the pool, 
         // returns false.
